@@ -1,0 +1,7 @@
+package org.frh.pets_backend.repository;
+
+import org.frh.pets_backend.entity.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CategoryRepository extends JpaRepository<Category, Long> {
+}

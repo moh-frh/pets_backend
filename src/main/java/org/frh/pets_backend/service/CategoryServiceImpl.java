@@ -3,7 +3,9 @@ package org.frh.pets_backend.service;
 import lombok.extern.slf4j.Slf4j;
 import org.frh.pets_backend.dto.CategoryDTO;
 import org.frh.pets_backend.entity.Category;
+import org.frh.pets_backend.entity.User;
 import org.frh.pets_backend.exception.CategoryNotFoundException;
+import org.frh.pets_backend.exception.UserNotFoundException;
 import org.frh.pets_backend.mapper.CategoryMapperImpl;
 import org.frh.pets_backend.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
@@ -57,9 +59,12 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public CategoryDTO updateCategory(CategoryDTO categoryDTO){
+    public CategoryDTO updateCategory(CategoryDTO categoryDTO) throws CategoryNotFoundException {
         log.info("updating category !!!!");
+        Category categoryInformation = categoryRepository.findById(categoryDTO.getId()).orElseThrow(()->new CategoryNotFoundException("category not found !!!"));
         Category category = dtoMapperCategory.fromCategoryDTO(categoryDTO);
+        category.setCreatedAt(categoryInformation.getCreatedAt());
+        category.setUpdatedAt(new Date());
         Category updatedCategory = categoryRepository.save(category);
         return dtoMapperCategory.fromCategory(updatedCategory);
     }

@@ -38,7 +38,7 @@ public class CategoryRestController {
     }
 
     @PutMapping("/categories/{id}")
-    public CategoryDTO updateCategory(@PathVariable(name = "id") Long categoryId, @RequestBody CategoryDTO categoryDTO){
+    public CategoryDTO updateCategory(@PathVariable(name = "id") Long categoryId, @RequestBody CategoryDTO categoryDTO) throws CategoryNotFoundException {
         categoryDTO.setId(categoryId);
         return categoryService.updateCategory(categoryDTO);
     }

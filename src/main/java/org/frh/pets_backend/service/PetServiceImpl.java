@@ -17,8 +17,9 @@ public class PetServiceImpl implements PetService{
     private PetRepository petRepository;
     private PetMapperImpl dtoMapperPet;
 
-    public PetServiceImpl(PetRepository petRepository){
+    public PetServiceImpl(PetRepository petRepository, PetMapperImpl dtoMapperPet){
         this.petRepository = petRepository;
+        this.dtoMapperPet = dtoMapperPet;
     }
     @Override
     public List<PetDTO> listPets() {

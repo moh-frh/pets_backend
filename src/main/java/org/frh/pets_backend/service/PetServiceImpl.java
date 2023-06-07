@@ -36,8 +36,13 @@ public class PetServiceImpl implements PetService{
     @Override
     public PetDTO savePet(PetDTO petDTO) {
         log.info("saving new pet !!!");
+        System.out.println("******* pet dto :"+petDTO);
 
         Pet pet = dtoMapperPet.fromPetDTO(petDTO);
+
+        //pet.setUser();
+        //pet.setCategory();
+
         Pet savedPet = petRepository.save(pet);
         return dtoMapperPet.fromPet(savedPet);
     }

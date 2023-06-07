@@ -24,8 +24,8 @@ public class Utils {
         int randomIndex = random.nextInt(size);
         Long randomValue = listCategories.get(randomIndex).getId();
 
-        System.out.println("listCategories size() : " + listCategories);
-        System.out.println("Random value: " + randomValue);
+        //System.out.println("listCategories size() : " + listCategories);
+        //System.out.println("Random value: " + randomValue);
 
         return randomValue;
     }

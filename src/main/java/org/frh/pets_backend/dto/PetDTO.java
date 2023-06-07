@@ -21,10 +21,7 @@ public class PetDTO {
     private Date createdAt;
     private Date updatedAt;
 
-    @ManyToOne
     private User user;
-
-    @ManyToOne
     private Category category;
 
 }

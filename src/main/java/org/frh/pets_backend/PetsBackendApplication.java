@@ -58,7 +58,7 @@ public class PetsBackendApplication {
 
                 Long randomIdCategory = utils.RandomIdFromCategoryList();
 
-                System.out.println("----- from utils : " + randomIdCategory);
+                //System.out.println("----- from utils : " + randomIdCategory);
 
                 try {
                     category = categoryService.getCategoryBtId(randomIdCategory);

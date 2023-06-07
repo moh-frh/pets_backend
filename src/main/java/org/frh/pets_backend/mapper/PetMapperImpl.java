@@ -14,6 +14,9 @@ import java.util.Date;
 public class PetMapperImpl {
     public Pet fromPetDTO(PetDTO petDTO){
         Pet pet = new Pet();
+
+        // must add user + category in pet object !!!!
+
         BeanUtils.copyProperties(petDTO, pet);
         return pet;
     }

@@ -21,7 +21,7 @@ public class PetDTO {
     private Date createdAt;
     private Date updatedAt;
 
-    private User user;
-    private Category category;
+    private UserDTO user;
+    private CategoryDTO category;
 
 }

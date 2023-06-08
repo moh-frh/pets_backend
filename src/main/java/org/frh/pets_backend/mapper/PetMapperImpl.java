@@ -13,6 +13,10 @@ import java.util.Date;
 @Service
 public class PetMapperImpl {
     public Pet fromPetDTO(PetDTO petDTO){
+        System.out.println("++++++++++++++++++");
+        System.out.println(petDTO);
+        System.out.println("++++++++++++++++++");
+
         Pet pet = new Pet();
 
         // must add user + category in pet object !!!!

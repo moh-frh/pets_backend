@@ -2,11 +2,13 @@ package org.frh.pets_backend;
 
 import org.frh.pets_backend.dto.CategoryDTO;
 import org.frh.pets_backend.dto.PetDTO;
+import org.frh.pets_backend.dto.UserDTO;
 import org.frh.pets_backend.enums.GenderType;
 import org.frh.pets_backend.exception.CategoryNotFoundException;
 import org.frh.pets_backend.mapper.CategoryMapperImpl;
 import org.frh.pets_backend.service.CategoryService;
 import org.frh.pets_backend.service.PetService;
+import org.frh.pets_backend.service.UserService;
 import org.frh.pets_backend.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -29,8 +31,17 @@ public class PetsBackendApplication {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(PetService petService, CategoryService categoryService, CategoryMapperImpl dtoMapperCategory){
+    CommandLineRunner commandLineRunner(UserService userService, PetService petService, CategoryService categoryService, CategoryMapperImpl dtoMapperCategory){
         return args -> {
+
+            // save new users
+            Stream.of("user1", "user2", "user3").forEach(user->{
+                UserDTO userDTO = new UserDTO();
+                userDTO.setUsername(user);
+                userDTO.setCreatedAt(new Date());
+                userDTO.setUpdatedAt(new Date());
+                userService.saveUser(userDTO);
+            });
 
             // save new categories
             Stream.of("category1", "category2", "category3").forEach(categ->{
@@ -71,9 +82,14 @@ public class PetsBackendApplication {
                     e.printStackTrace();
                 }
 
-                petDTO.setCategory(dtoMapperCategory.fromCategoryDTO(category));
+                petDTO.setCategory(category);
+                //petDTO.setIdUser(userDTO.);
 
-                petService.savePet(petDTO);
+                try {
+                    petService.savePet(petDTO);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             });
         };
     }

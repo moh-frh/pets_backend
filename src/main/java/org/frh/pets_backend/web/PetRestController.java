@@ -25,7 +25,8 @@ public class PetRestController {
     }
 
     @PostMapping("/pets")
-    public PetDTO savePet(@RequestBody PetDTO petDTO){
+    public PetDTO savePet(@RequestBody PetDTO petDTO) throws Exception {
+        System.out.println("::controller::save_user");
         return petService.savePet(petDTO);
     }
 

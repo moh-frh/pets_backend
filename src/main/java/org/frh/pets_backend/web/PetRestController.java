@@ -2,6 +2,7 @@ package org.frh.pets_backend.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.frh.pets_backend.dto.PetDTO;
+import org.frh.pets_backend.dto.PetDTO2;
 import org.frh.pets_backend.exception.PetException;
 import org.frh.pets_backend.service.PetService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +26,9 @@ public class PetRestController {
     }
 
     @PostMapping("/pets")
-    public PetDTO savePet(@RequestBody PetDTO petDTO) throws Exception {
+    public PetDTO2 savePet(@RequestBody PetDTO2 petDTO2) throws Exception {
         System.out.println("::controller::save_user");
-        return petService.savePet(petDTO);
+        return petService.savePet(petDTO2);
     }
 
 }

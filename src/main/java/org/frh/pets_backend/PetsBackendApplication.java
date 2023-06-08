@@ -5,6 +5,7 @@ import org.frh.pets_backend.dto.PetDTO;
 import org.frh.pets_backend.dto.UserDTO;
 import org.frh.pets_backend.enums.GenderType;
 import org.frh.pets_backend.exception.CategoryNotFoundException;
+import org.frh.pets_backend.exception.UserNotFoundException;
 import org.frh.pets_backend.mapper.CategoryMapperImpl;
 import org.frh.pets_backend.service.CategoryService;
 import org.frh.pets_backend.service.PetService;
@@ -53,7 +54,7 @@ public class PetsBackendApplication {
             });
 
             // save new pets
-            Stream.of("pet1", "pet2", "pet3").forEach(pet->{
+            /*Stream.of("pet1", "pet2", "pet3").forEach(pet->{
                 PetDTO petDTO = new PetDTO();
                 petDTO.setName(pet);
                 petDTO.setAge((int) (1 + Math.random()*100));
@@ -63,7 +64,8 @@ public class PetsBackendApplication {
                 petDTO.setCreatedAt(new Date());
                 petDTO.setUpdatedAt(new Date());
 
-                CategoryDTO category = null;
+                CategoryDTO categoryDTO = null;
+                UserDTO userDTO = null;
                 List<CategoryDTO> listCategories;
                 List<Long> listCategoryIds = new ArrayList<>();
 
@@ -72,25 +74,26 @@ public class PetsBackendApplication {
                 //System.out.println("----- from utils : " + randomIdCategory);
 
                 try {
-                    category = categoryService.getCategoryBtId(randomIdCategory);
+                    categoryDTO = categoryService.getCategoryBtId(randomIdCategory);
+                    userDTO = userService.getUserById(1L);
                      listCategories = categoryService.listCategory();
 
                     listCategories.forEach(categ->{
                         listCategoryIds.add(categ.getId());
                     });
-                } catch (CategoryNotFoundException e) {
+                } catch (CategoryNotFoundException | UserNotFoundException e) {
                     e.printStackTrace();
                 }
 
-                petDTO.setCategory(category);
-                //petDTO.setIdUser(userDTO.);
+                petDTO.setCategory(categoryDTO);
+                petDTO.setUser(userDTO);
 
                 try {
                     petService.savePet(petDTO);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            });
+            }); */
         };
     }
 

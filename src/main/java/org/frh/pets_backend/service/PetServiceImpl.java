@@ -2,10 +2,10 @@ package org.frh.pets_backend.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.frh.pets_backend.dto.PetDTO;
+import org.frh.pets_backend.dto.PetDTO2;
 import org.frh.pets_backend.entity.Category;
 import org.frh.pets_backend.entity.Pet;
 import org.frh.pets_backend.entity.User;
-import org.frh.pets_backend.exception.UserNotFoundException;
 import org.frh.pets_backend.mapper.CategoryMapperImpl;
 import org.frh.pets_backend.mapper.PetMapperImpl;
 import org.frh.pets_backend.mapper.UserMapperImpl;
@@ -60,29 +60,29 @@ public class PetServiceImpl implements PetService{
     }
 
     @Override
-    public PetDTO savePet(PetDTO petDTO) throws Exception {
+    public PetDTO2 savePet(PetDTO2 petDTO2) throws Exception {
         log.info("saving new pet !!!");
-        System.out.println("******* pet dto :"+petDTO);
+        System.out.println("******* pet dto :"+petDTO2);
 
-        Pet pet = dtoMapperPet.fromPetDTO(petDTO);
+        Pet pet = dtoMapperPet.fromPetDTO2(petDTO2);
 
-        if(petDTO.getUser()!=null) {
-            Optional<User> user = userRepository.findById(petDTO.getUser().getId());
+        if(petDTO2.getUserId()!=null) {
+            Optional<User> user = userRepository.findById(petDTO2.getUserId());
             if (user.isPresent())
                 pet.setUser(user.get());
         }
-        if(petDTO.getCategory()!=null) {
-            Optional<Category> category = categoryRepository.findById(petDTO.getCategory().getId());
+        if(petDTO2.getCategoryId()!=null) {
+            Optional<Category> category = categoryRepository.findById(petDTO2.getCategoryId());
             if (category.isPresent())
                 pet.setCategory(category.get());
         }
 
         Pet savedPet = petRepository.save(pet);
-        petDTO= dtoMapperPet.fromPet(savedPet);
+        petDTO2 = dtoMapperPet.fromPet2(savedPet);
         if(savedPet.getUser()!=null)
-            petDTO.setUser(dtoMapperUser.fromUser(savedPet.getUser()));
+            petDTO2.setUserId(dtoMapperUser.fromUser(savedPet.getUser()).getId());
         if(savedPet.getCategory()!=null)
-            petDTO.setCategory(dtoMapperCategory.fromCategory(savedPet.getCategory()));
-        return petDTO;
+            petDTO2.setCategoryId(dtoMapperCategory.fromCategory(savedPet.getCategory()).getId());
+        return petDTO2;
     }
 }

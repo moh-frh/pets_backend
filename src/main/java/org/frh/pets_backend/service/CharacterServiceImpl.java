@@ -23,8 +23,6 @@ public class CharacterServiceImpl implements CharacterService{
     @Autowired
     private CharacterMapperImpl dtoMapperCharacter;
 
-
-
     @Override
     public List<CharacterDTO> listCharacter(){
         List<Character> listCharacter = characterRepository.findAll();

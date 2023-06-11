@@ -62,7 +62,6 @@ public class PetServiceImpl implements PetService{
     @Override
     public PetDTO2 savePet(PetDTO2 petDTO2) throws Exception {
         log.info("saving new pet !!!");
-        System.out.println("******* pet dto :"+petDTO2);
 
         Pet pet = dtoMapperPet.fromPetDTO2(petDTO2);
 
@@ -84,5 +83,38 @@ public class PetServiceImpl implements PetService{
         if(savedPet.getCategory()!=null)
             petDTO2.setCategoryId(dtoMapperCategory.fromCategory(savedPet.getCategory()).getId());
         return petDTO2;
+    }
+
+    @Override
+    public PetDTO2 updatePet(PetDTO2 petDTO2) throws Exception {
+        log.info("updating pet !!!");
+
+        Pet pet = dtoMapperPet.fromPetDTO2(petDTO2);
+
+        if(petDTO2.getUserId()!=null) {
+            Optional<User> user = userRepository.findById(petDTO2.getUserId());
+            if (user.isPresent())
+                pet.setUser(user.get());
+        }
+        if(petDTO2.getCategoryId()!=null) {
+            Optional<Category> category = categoryRepository.findById(petDTO2.getCategoryId());
+            if (category.isPresent())
+                pet.setCategory(category.get());
+        }
+
+        Pet savedPet = petRepository.save(pet);
+        petDTO2 = dtoMapperPet.fromPet2(savedPet);
+
+        if(savedPet.getUser()!=null)
+            petDTO2.setUserId(dtoMapperUser.fromUser(savedPet.getUser()).getId());
+        if(savedPet.getCategory()!=null)
+            petDTO2.setCategoryId(dtoMapperCategory.fromCategory(savedPet.getCategory()).getId());
+
+        return petDTO2;
+    }
+
+    @Override
+    public void deletePet(Long id){
+        petRepository.deleteById(id);
     }
 }

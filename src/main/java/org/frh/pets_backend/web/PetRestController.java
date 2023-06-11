@@ -5,10 +5,7 @@ import org.frh.pets_backend.dto.PetDTO;
 import org.frh.pets_backend.dto.PetDTO2;
 import org.frh.pets_backend.exception.PetException;
 import org.frh.pets_backend.service.PetService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +26,17 @@ public class PetRestController {
     public PetDTO2 savePet(@RequestBody PetDTO2 petDTO2) throws Exception {
         System.out.println("::controller::save_user");
         return petService.savePet(petDTO2);
+    }
+
+    @PutMapping("/pets/{id}")
+    public PetDTO2 updatePet(@PathVariable(name = "id") Long petId, @RequestBody PetDTO2 petDTO2) throws Exception {
+        petDTO2.setId(petId);
+        return petService.updatePet(petDTO2);
+    }
+
+    @DeleteMapping("/pets/{id}")
+    public void deletePet(@PathVariable(name="id") Long petId){
+        petService.deletePet(petId);
     }
 
 }

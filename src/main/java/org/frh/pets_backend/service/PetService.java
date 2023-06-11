@@ -12,4 +12,8 @@ public interface PetService {
 
 
     PetDTO2 savePet(PetDTO2 petDTO2) throws Exception;
+
+    PetDTO2 updatePet(PetDTO2 petDTO2) throws Exception;
+
+    void deletePet(Long id);
 }

@@ -19,4 +19,5 @@ public class PetDTO2 {
     private Long userId;
     private Long categoryId;
 
+
 }

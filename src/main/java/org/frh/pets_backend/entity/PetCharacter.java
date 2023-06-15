@@ -18,15 +18,30 @@ public class PetCharacter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    String name;
-    String description;
     private Date createdAt;
     private Date updatedAt;
 
     @ManyToOne
+    @JoinColumn(name = "pet_id")
     private Pet pet;
 
     @ManyToOne
+    @JoinColumn(name = "character_id")
     private Character character;
+
+
+    @PrePersist
+    private void prePersist()
+    {
+        createdAt=new Date();
+        updatedAt=createdAt;
+    }
+
+
+    @PreUpdate
+    private void preUpdate()
+    {
+        updatedAt=new Date();
+    }
 
 }

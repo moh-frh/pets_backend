@@ -11,7 +11,7 @@ public interface PetService {
     List<PetDTO> listPets() ;
 
 
-    PetDTO2 savePet(PetDTO2 petDTO2) throws Exception;
+    PetDTO savePet(PetDTO petDTO) throws Exception;
 
     PetDTO2 updatePet(PetDTO2 petDTO2) throws Exception;
 

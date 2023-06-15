@@ -4,6 +4,7 @@ import lombok.Data;
 import org.frh.pets_backend.enums.GenderType;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class PetDTO2 {
@@ -18,6 +19,7 @@ public class PetDTO2 {
 
     private Long userId;
     private Long categoryId;
+    private List<Long> listCharacterId;
 
 
 }

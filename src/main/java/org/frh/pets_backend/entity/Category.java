@@ -24,4 +24,14 @@ public class Category {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Pet> pets;
 
+    @PrePersist
+    public void prePersist(){
+        createdAt = new Date();
+        updatedAt = createdAt;
+    }
+    @PreUpdate
+    public void preUpdate(){
+        updatedAt = new Date();
+    }
+
 }

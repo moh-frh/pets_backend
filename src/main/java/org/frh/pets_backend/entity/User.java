@@ -1,5 +1,6 @@
 package org.frh.pets_backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +27,18 @@ public class User {
     private Date updatedAt;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Pet> pets;
+
+    @PrePersist
+    public void prePersist(){
+        createdAt = new Date();
+        updatedAt = createdAt;
+    }
+    @PreUpdate
+    public void preUpdate(){
+        updatedAt = new Date();
+    }
 
 
 }

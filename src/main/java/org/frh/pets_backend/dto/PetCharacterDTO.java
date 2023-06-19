@@ -10,9 +10,14 @@ import java.util.Date;
 @Data
 public class PetCharacterDTO {
     private Long id;
-
+//*******************************************
     private Long petId;
     private Long characterId;
+//*******************************************
+    private Pet pet;
+    private Character character;
+//*******************************************
+
 
     private Date createdAt;
     private Date updatedAt;

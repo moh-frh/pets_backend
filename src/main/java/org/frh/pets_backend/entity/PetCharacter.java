@@ -2,17 +2,22 @@ package org.frh.pets_backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Data
-@NoArgsConstructor
+@Setter
+
+@Getter
+
 @AllArgsConstructor
+
+@NoArgsConstructor
+
+@ToString
+
+@Entity
 public class PetCharacter {
 
     @Id
@@ -22,11 +27,11 @@ public class PetCharacter {
     private Date updatedAt;
 
     @ManyToOne
-    //@JoinColumn(name = "pet_id")
+    @JoinColumn(name = "pet_id")
     private Pet pet;
 
     @ManyToOne
-    //@JoinColumn(name = "character_id")
+    @JoinColumn(name = "character_id")
     private Character character;
 
 
@@ -36,8 +41,6 @@ public class PetCharacter {
         createdAt=new Date();
         updatedAt=createdAt;
     }
-
-
     @PreUpdate
     private void preUpdate()
     {

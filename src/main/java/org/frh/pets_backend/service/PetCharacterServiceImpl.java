@@ -1,5 +1,6 @@
 package org.frh.pets_backend.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.frh.pets_backend.dto.PetCharacterDTO;
 import org.frh.pets_backend.entity.Character;
@@ -52,18 +53,26 @@ public class PetCharacterServiceImpl implements PetCharacterService{
 
     @Override
     public PetCharacterDTO savePetCharacter(PetCharacterDTO petCharacterDTO){
-        log.info("saving new pet-character !!!");
+        log.info("saving new pet-character ** !!!");
         PetCharacter petCharacter = dtoMapperPetCharacter.fromPetCharacterDTO(petCharacterDTO);
-        Pet pet = petRepository.findById(petCharacterDTO.getPetId()).orElse(null);
-        Character character = characterRepository.findById(petCharacterDTO.getCharacterId()).orElse(null);
+
+        //System.out.println("petCharacterDTO.getPetId() : "+petCharacterDTO.getPetId());
+        //System.out.println("petCharacterDTO.getCharacterId() : "+petCharacterDTO.getCharacterId());
+
+        Pet pet = petRepository.findById(petCharacterDTO.getPetId()).orElseThrow(() -> new EntityNotFoundException("Pet entity not found"));
+        Character character = characterRepository.findById(petCharacterDTO.getCharacterId()).orElseThrow(() -> new EntityNotFoundException("Character entity not found"));
+
+        System.out.println("pet : "+pet);
+        System.out.println("character : "+character);
 
         petCharacter.setPet(pet);
         petCharacter.setCharacter(character);
 
 
+
         System.out.println("petCharacterDTO: "+petCharacterDTO);
         System.out.println("petCharacter: "+petCharacter);
-        System.out.println("petCharacter after date insert: "+petCharacter);
+
         PetCharacter savedPetCharacter = petCharacterRepository.save(petCharacter);
         return dtoMapperPetCharacter.fromPetCharacter(savedPetCharacter);
     }

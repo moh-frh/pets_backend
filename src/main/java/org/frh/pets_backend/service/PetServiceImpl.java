@@ -10,6 +10,7 @@ import org.frh.pets_backend.mapper.CategoryMapperImpl;
 import org.frh.pets_backend.mapper.PetMapperImpl;
 import org.frh.pets_backend.mapper.UserMapperImpl;
 import org.frh.pets_backend.repository.*;
+import org.frh.pets_backend.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,10 +20,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 @Transactional
 @Slf4j
 public class PetServiceImpl implements PetService{
+    @Autowired
+    Utils utils;
+
     @Autowired
     private PetRepository petRepository;
 
@@ -51,14 +56,20 @@ public class PetServiceImpl implements PetService{
     @Override
     public List<PetDTO> listPets() {
         List<Pet> pets = petRepository.findAll();
-
         List<PetDTO> petDTOS = new ArrayList<>();
+
         for(Pet pet:pets){
             PetDTO petDTO = dtoMapperPet.fromPet(pet);
             if(pet.getUser()!=null)
-            petDTO.setUser(dtoMapperUser.fromUser(pet.getUser()));
+                petDTO.setUser(dtoMapperUser.fromUser(pet.getUser()));
             if(pet.getCategory()!=null)
-            petDTO.setCategory(dtoMapperCategory.fromCategory(pet.getCategory()));
+                petDTO.setCategory(dtoMapperCategory.fromCategory(pet.getCategory()));
+            if(pet.getPetCharacters()!=null && pet.getPetCharacters().size()>0)
+            {
+                System.out.println("pet charcter is empty !!!");
+                //petDTO.setListCharacter(pet.getPetCharacters());
+            }
+
             petDTOS.add(petDTO);
         }
         return petDTOS;
@@ -70,7 +81,7 @@ public class PetServiceImpl implements PetService{
 
         Pet pet = dtoMapperPet.fromPetDTO(petDTO);
 
-        System.out.println("*******************************************");
+        System.out.println("pet DTO :**************************************");
         System.out.println(petDTO);
         System.out.println("*******************************************");
 
@@ -86,27 +97,36 @@ public class PetServiceImpl implements PetService{
                 pet.setCategory(category.get());
         }
 
-
+        System.out.println("--------------------------------------------");
+        System.out.println(pet);
+        System.out.println("--------------------------------------------");
 
         pet = petRepository.save(pet);
+
         petDTO = dtoMapperPet.fromPet(pet);
+
         if(pet.getUser()!=null)
             petDTO.setUserId(dtoMapperUser.fromUser(pet.getUser()).getId());
         if(pet.getCategory()!=null)
             petDTO.setCategoryId(dtoMapperCategory.fromCategory(pet.getCategory()).getId());
 
         if(petDTO.getListCharacterId()!=null && !petDTO.getListCharacterId().isEmpty()) {
+            System.out.println("petDTO.getListCharacterId() ::::::::::::::::::::::::::");
+            System.out.println(petDTO.getListCharacterId());
+            System.out.println("// petDTO.getListCharacterId() ::::::::::::::::::::::::::");
             for (Long id:petDTO.getListCharacterId()){
                 Optional<Character> character = characterRepository.findById(id);
-                if (character.isPresent())
-                {
-                    PetCharacter pc =new PetCharacter();
+                if (character.isPresent()){
+                    PetCharacter pc = new PetCharacter();
                     pc.setCharacter(character.get());
                     pc.setPet(pet);
                     petCharacterRepository.save(pc);
                 }
             };
         }
+
+        // update petcharacterList in Pet table
+        // *****
         return petDTO;
     }
 

@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+//@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class PetDTO {
     private Long id;
     private String name;
@@ -25,6 +25,7 @@ public class PetDTO {
     private Date createdAt;
     private Date updatedAt;
 
+    /* ---------------------------------------------- */
     private UserDTO user;
     private CategoryDTO category;
     private List<Character> listCharacter;

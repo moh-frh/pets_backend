@@ -10,7 +10,6 @@ import java.util.List;
 public interface PetService {
     List<PetDTO> listPets() ;
 
-
     PetDTO savePet(PetDTO petDTO) throws Exception;
 
     PetDTO2 updatePet(PetDTO2 petDTO2) throws Exception;

@@ -9,7 +9,7 @@ import java.util.Date;
 public class CharacterDTO {
     private Long id;
     private String name;
-    private int description;
+    private String description;
     private Date createdAt;
     private Date updatedAt;
 

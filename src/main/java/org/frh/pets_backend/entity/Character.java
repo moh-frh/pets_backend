@@ -17,7 +17,7 @@ public class Character {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private int description;
+    private String description;
     private Date createdAt;
     private Date updatedAt;
 

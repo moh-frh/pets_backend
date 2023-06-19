@@ -1,6 +1,7 @@
 package org.frh.pets_backend;
 
 import org.frh.pets_backend.dto.CategoryDTO;
+import org.frh.pets_backend.dto.CharacterDTO;
 import org.frh.pets_backend.dto.PetDTO;
 import org.frh.pets_backend.dto.UserDTO;
 import org.frh.pets_backend.enums.GenderType;
@@ -8,6 +9,7 @@ import org.frh.pets_backend.exception.CategoryNotFoundException;
 import org.frh.pets_backend.exception.UserNotFoundException;
 import org.frh.pets_backend.mapper.CategoryMapperImpl;
 import org.frh.pets_backend.service.CategoryService;
+import org.frh.pets_backend.service.CharacterService;
 import org.frh.pets_backend.service.PetService;
 import org.frh.pets_backend.service.UserService;
 import org.frh.pets_backend.utils.Utils;
@@ -32,7 +34,7 @@ public class PetsBackendApplication {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(UserService userService, PetService petService, CategoryService categoryService, CategoryMapperImpl dtoMapperCategory){
+    CommandLineRunner commandLineRunner(UserService userService, PetService petService, CategoryService categoryService, CharacterService characterService){
         return args -> {
 
             // save new users
@@ -51,6 +53,16 @@ public class PetsBackendApplication {
                 categoryDTO.setCreatedAt(new Date());
                 categoryDTO.setUpdatedAt(new Date());
                 categoryService.saveCategory(categoryDTO);
+            });
+
+            // save new character
+            Stream.of("character1", "character2", "character3").forEach(character->{
+                CharacterDTO characterDTO = new CharacterDTO();
+                characterDTO.setName(character);
+                characterDTO.setDescription(character+" description");
+                characterDTO.setCreatedAt(new Date());
+                characterDTO.setUpdatedAt(new Date());
+                characterService.saveCharacter(characterDTO);
             });
 
             // save new pets

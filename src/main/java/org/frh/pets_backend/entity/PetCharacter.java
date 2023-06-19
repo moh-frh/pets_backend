@@ -22,11 +22,11 @@ public class PetCharacter {
     private Date updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "pet_id")
+    //@JoinColumn(name = "pet_id")
     private Pet pet;
 
     @ManyToOne
-    @JoinColumn(name = "character_id")
+    //@JoinColumn(name = "character_id")
     private Character character;
 
 

@@ -19,10 +19,10 @@ public class Category {
     private Date createdAt;
     private Date updatedAt;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    /*@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     // we add this line when we have bidirectional relation (OneToMany and ManyToMany) to avoid infinite loop
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Pet> pets;
+    private List<Pet> pets;*/
 
     @PrePersist
     public void prePersist(){

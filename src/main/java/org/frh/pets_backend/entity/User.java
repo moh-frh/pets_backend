@@ -26,13 +26,12 @@ public class User {
     private Date createdAt;
     private Date updatedAt;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    /*@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Pet> pets;
+    private List<Pet> pets;*/
 
     @PrePersist
     public void prePersist(){
-        createdAt = new Date();
         updatedAt = createdAt;
     }
     @PreUpdate

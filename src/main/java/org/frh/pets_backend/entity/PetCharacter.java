@@ -7,15 +7,8 @@ import lombok.*;
 import java.util.Date;
 import java.util.List;
 
-@Setter
 
-@Getter
-
-@AllArgsConstructor
-
-@NoArgsConstructor
-
-@ToString
+@Data @AllArgsConstructor @NoArgsConstructor
 
 @Entity
 public class PetCharacter {

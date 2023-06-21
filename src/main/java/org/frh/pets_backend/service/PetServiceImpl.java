@@ -6,6 +6,7 @@ import org.frh.pets_backend.dto.PetDTO;
 import org.frh.pets_backend.dto.PetDTO2;
 import org.frh.pets_backend.entity.*;
 import org.frh.pets_backend.entity.Character;
+import org.frh.pets_backend.exception.CharacterNotFoundException;
 import org.frh.pets_backend.mapper.CategoryMapperImpl;
 import org.frh.pets_backend.mapper.PetMapperImpl;
 import org.frh.pets_backend.mapper.UserMapperImpl;
@@ -58,6 +59,8 @@ public class PetServiceImpl implements PetService{
         List<Pet> pets = petRepository.findAll();
         List<PetDTO> petDTOS = new ArrayList<>();
 
+        List<Character> characterList = new ArrayList<>();
+
         for(Pet pet:pets){
             PetDTO petDTO = dtoMapperPet.fromPet(pet);
             if(pet.getUser()!=null)
@@ -66,12 +69,17 @@ public class PetServiceImpl implements PetService{
                 petDTO.setCategory(dtoMapperCategory.fromCategory(pet.getCategory()));
             if(pet.getPetCharacters()!=null && pet.getPetCharacters().size()>0)
             {
-                System.out.println("pet charcter is empty !!!");
-                //petDTO.setListCharacter(pet.getPetCharacters());
+                System.out.println("PetCharacters : "+pet.getPetCharacters());
+
+                petDTO.setListCharacter(pet.getPetCharacters());
+                for(PetCharacter pc:pet.getPetCharacters()){
+                    pc.getPet().get
+                }
             }
 
             petDTOS.add(petDTO);
         }
+        System.err.println("Azul*****************************************************************"+petDTOS);
         return petDTOS;
     }
 
@@ -101,9 +109,32 @@ public class PetServiceImpl implements PetService{
         System.out.println(pet);
         System.out.println("--------------------------------------------");
 
-        pet = petRepository.save(pet);
+        Pet savedPet = petRepository.save(pet);
+        System.out.println("saved pet : "+savedPet);
 
-        petDTO = dtoMapperPet.fromPet(pet);
+
+List<Character> listCharacters = new ArrayList<>();
+
+// insert in pet-character
+        for(Long id:petDTO.getListCharacterId()){
+            PetCharacter pc = new PetCharacter();
+            pc.setPet(savedPet);
+            Character character = characterRepository.findById(id).orElseThrow(()->new CharacterNotFoundException("character not found !!!!"));
+
+            // insert in list-character-dto
+            listCharacters.add(character);
+            // end-block ******************
+
+            pc.setCharacter(character);
+            PetCharacter savedPetCharacter = petCharacterRepository.save(pc);
+            System.out.println("pet: "+savedPet.getId()+" - character : "+id);
+            System.out.println("savedPetCharacter: "+savedPetCharacter);
+        }
+        System.out.println("listCharacters : "+listCharacters);
+        petDTO.setListCharacter(listCharacters);
+//end-block *************************
+
+        /*petDTO = dtoMapperPet.fromPet(pet);
 
         if(pet.getUser()!=null)
             petDTO.setUserId(dtoMapperUser.fromUser(pet.getUser()).getId());
@@ -123,7 +154,7 @@ public class PetServiceImpl implements PetService{
                     petCharacterRepository.save(pc);
                 }
             };
-        }
+        }*/
 
         // update petcharacterList in Pet table
         // *****

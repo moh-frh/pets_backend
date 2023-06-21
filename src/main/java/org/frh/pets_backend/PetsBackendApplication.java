@@ -4,10 +4,12 @@ import org.frh.pets_backend.dto.CategoryDTO;
 import org.frh.pets_backend.dto.CharacterDTO;
 import org.frh.pets_backend.dto.PetDTO;
 import org.frh.pets_backend.dto.UserDTO;
+import org.frh.pets_backend.entity.Character;
 import org.frh.pets_backend.enums.GenderType;
 import org.frh.pets_backend.exception.CategoryNotFoundException;
+import org.frh.pets_backend.exception.CharacterNotFoundException;
 import org.frh.pets_backend.exception.UserNotFoundException;
-import org.frh.pets_backend.mapper.CategoryMapperImpl;
+import org.frh.pets_backend.mapper.CharacterMapperImpl;
 import org.frh.pets_backend.service.CategoryService;
 import org.frh.pets_backend.service.CharacterService;
 import org.frh.pets_backend.service.PetService;
@@ -34,7 +36,7 @@ public class PetsBackendApplication {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(UserService userService, PetService petService, CategoryService categoryService, CharacterService characterService){
+    CommandLineRunner commandLineRunner(CharacterMapperImpl dtoMapperCharacter, UserService userService, PetService petService, CategoryService categoryService, CharacterService characterService){
         return args -> {
 
             // save new users
@@ -78,34 +80,54 @@ public class PetsBackendApplication {
 
                 CategoryDTO categoryDTO = null;
                 UserDTO userDTO = null;
-                List<CategoryDTO> listCategories;
-                List<Long> listCategoryIds = new ArrayList<>();
-
-                Long randomIdCategory = utils.RandomIdFromCategoryList();
-
-                //System.out.println("----- from utils : " + randomIdCategory);
+                CharacterDTO characterDTO = null;
 
                 try {
-                    categoryDTO = categoryService.getCategoryBtId(randomIdCategory);
-                    userDTO = userService.getUserById(1L);
-                     listCategories = categoryService.listCategory();
-
-                    listCategories.forEach(categ->{
-                        listCategoryIds.add(categ.getId());
-                    });
-                } catch (CategoryNotFoundException | UserNotFoundException e) {
+                    userDTO = userService.getUserById((long) 1L);
+                    categoryDTO = categoryService.getCategoryBtId(1L);
+                    characterDTO = characterService.getCharacterById(1L);
+                } catch (UserNotFoundException e) {
                     e.printStackTrace();
+                } catch (CategoryNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (CharacterNotFoundException e) {
+                    throw new RuntimeException(e);
                 }
 
-                petDTO.setCategory(categoryDTO);
+                System.err.println("userDTO : "+userDTO);
+                System.err.println("categoryDTO : "+categoryDTO);
+                System.err.println("characterDTO : "+characterDTO);
+
+                List<Character> listCharacter = new ArrayList<>();
+                Character c = dtoMapperCharacter.fromCharacterDTO(characterDTO);
+
+                listCharacter.add(c);
+
+                System.err.println("listCharacter : "+listCharacter);
+
                 petDTO.setUser(userDTO);
+                petDTO.setCategory(categoryDTO);
+                petDTO.setListCharacter(listCharacter);
+
+                //********************************************
+                List<Long> listC = new ArrayList<>();
+                listC.add(1L);
+                listC.add(2L);
+
+
+                petDTO.setUserId(1L);
+                petDTO.setCategoryId(1L);
+                petDTO.setListCharacterId(listC);
+                //********************************************
+
+                System.err.println("petDTO : "+petDTO);
 
                 try {
                     petService.savePet(petDTO);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }); */
+            });*/
         };
     }
 

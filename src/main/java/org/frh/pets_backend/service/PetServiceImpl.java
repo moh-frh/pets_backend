@@ -59,7 +59,13 @@ public class PetServiceImpl implements PetService{
         List<Pet> pets = petRepository.findAll();
         List<PetDTO> petDTOS = new ArrayList<>();
 
-        List<Character> characterList = new ArrayList<>();
+
+
+        List<PetCharacter> petCharacterList = petCharacterRepository.findAll();
+
+        System.out.println("petCharacterList++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(petCharacterList);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
         for(Pet pet:pets){
             PetDTO petDTO = dtoMapperPet.fromPet(pet);
@@ -67,6 +73,8 @@ public class PetServiceImpl implements PetService{
                 petDTO.setUser(dtoMapperUser.fromUser(pet.getUser()));
             if(pet.getCategory()!=null)
                 petDTO.setCategory(dtoMapperCategory.fromCategory(pet.getCategory()));
+
+            // get pet-character from petCharacter entity
             /*if(pet.getPetCharacters()!=null && pet.getPetCharacters().size()>0)
             {
                 System.out.println("PetCharacters : "+pet.getPetCharacters());
@@ -134,30 +142,9 @@ List<Character> listCharacters = new ArrayList<>();
         petDTO.setListCharacter(listCharacters);
 //end-block *************************
 
-        /*petDTO = dtoMapperPet.fromPet(pet);
+        petDTO.setUser(dtoMapperUser.fromUser(savedPet.getUser()));
+        petDTO.setCategory(dtoMapperCategory.fromCategory(savedPet.getCategory()));
 
-        if(pet.getUser()!=null)
-            petDTO.setUserId(dtoMapperUser.fromUser(pet.getUser()).getId());
-        if(pet.getCategory()!=null)
-            petDTO.setCategoryId(dtoMapperCategory.fromCategory(pet.getCategory()).getId());
-
-        if(petDTO.getListCharacterId()!=null && !petDTO.getListCharacterId().isEmpty()) {
-            System.out.println("petDTO.getListCharacterId() ::::::::::::::::::::::::::");
-            System.out.println(petDTO.getListCharacterId());
-            System.out.println("// petDTO.getListCharacterId() ::::::::::::::::::::::::::");
-            for (Long id:petDTO.getListCharacterId()){
-                Optional<Character> character = characterRepository.findById(id);
-                if (character.isPresent()){
-                    PetCharacter pc = new PetCharacter();
-                    pc.setCharacter(character.get());
-                    pc.setPet(pet);
-                    petCharacterRepository.save(pc);
-                }
-            };
-        }*/
-
-        // update petcharacterList in Pet table
-        // *****
         return petDTO;
     }
 

@@ -67,7 +67,7 @@ public class PetServiceImpl implements PetService{
                 petDTO.setUser(dtoMapperUser.fromUser(pet.getUser()));
             if(pet.getCategory()!=null)
                 petDTO.setCategory(dtoMapperCategory.fromCategory(pet.getCategory()));
-            if(pet.getPetCharacters()!=null && pet.getPetCharacters().size()>0)
+            /*if(pet.getPetCharacters()!=null && pet.getPetCharacters().size()>0)
             {
                 System.out.println("PetCharacters : "+pet.getPetCharacters());
 
@@ -75,7 +75,7 @@ public class PetServiceImpl implements PetService{
                 for(PetCharacter pc:pet.getPetCharacters()){
                     pc.getPet().get
                 }
-            }
+            }*/
 
             petDTOS.add(petDTO);
         }

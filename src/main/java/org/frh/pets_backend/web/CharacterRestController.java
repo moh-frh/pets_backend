@@ -2,9 +2,7 @@ package org.frh.pets_backend.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.frh.pets_backend.dto.CharacterDTO;
-import org.frh.pets_backend.dto.UserDTO;
 import org.frh.pets_backend.exception.CharacterNotFoundException;
-import org.frh.pets_backend.exception.UserNotFoundException;
 import org.frh.pets_backend.service.CharacterService;
 import org.springframework.web.bind.annotation.*;
 

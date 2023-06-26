@@ -61,11 +61,17 @@ public class PetServiceImpl implements PetService{
 
 
 
-        List<PetCharacter> petCharacterList = petCharacterRepository.findAll();
+        /*List<PetCharacter> petCharacterList = petCharacterRepository.findAll();
 
         System.out.println("petCharacterList++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println(petCharacterList);
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");*/
+
+        List<Character> charactersList = characterRepository.findCharactersByPetId(1L);
+
+        System.err.println("pet character List++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.err.println(charactersList);
+        System.err.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
         for(Pet pet:pets){
             PetDTO petDTO = dtoMapperPet.fromPet(pet);
@@ -75,15 +81,12 @@ public class PetServiceImpl implements PetService{
                 petDTO.setCategory(dtoMapperCategory.fromCategory(pet.getCategory()));
 
             // get pet-character from petCharacter entity
-            /*if(pet.getPetCharacters()!=null && pet.getPetCharacters().size()>0)
+            if(pet.getPetCharacters()!=null && pet.getPetCharacters().size()>0)
             {
                 System.out.println("PetCharacters : "+pet.getPetCharacters());
 
-                petDTO.setListCharacter(pet.getPetCharacters());
-                for(PetCharacter pc:pet.getPetCharacters()){
-                    pc.getPet().get
-                }
-            }*/
+                petDTO.setListCharacter(charactersList);
+            }
 
             petDTOS.add(petDTO);
         }

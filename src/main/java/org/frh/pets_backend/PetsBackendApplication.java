@@ -2,13 +2,7 @@ package org.frh.pets_backend;
 
 import org.frh.pets_backend.dto.CategoryDTO;
 import org.frh.pets_backend.dto.CharacterDTO;
-import org.frh.pets_backend.dto.PetDTO;
 import org.frh.pets_backend.dto.UserDTO;
-import org.frh.pets_backend.entity.Character;
-import org.frh.pets_backend.enums.GenderType;
-import org.frh.pets_backend.exception.CategoryNotFoundException;
-import org.frh.pets_backend.exception.CharacterNotFoundException;
-import org.frh.pets_backend.exception.UserNotFoundException;
 import org.frh.pets_backend.mapper.CharacterMapperImpl;
 import org.frh.pets_backend.service.CategoryService;
 import org.frh.pets_backend.service.CharacterService;
@@ -21,9 +15,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.stream.Stream;
 
 @SpringBootApplication
